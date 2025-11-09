@@ -26,7 +26,6 @@ import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class RequestService {
 
     private final RequestRepository requestRepository;

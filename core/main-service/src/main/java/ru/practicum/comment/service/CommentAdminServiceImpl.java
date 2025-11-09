@@ -19,13 +19,14 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-@Transactional
+
 public class CommentAdminServiceImpl implements CommentAdminService {
 
     private final CommentRepository repository;
     private final UserRepository userRepository;
 
     @Override
+    @Transactional
     public void delete(Long comId) {
         log.info("admin delete - invoked");
         if (!repository.existsById(comId)) {
@@ -61,6 +62,7 @@ public class CommentAdminServiceImpl implements CommentAdminService {
     }
 
     @Override
+    @Transactional
     public CommentDto approveComment(Long comId) {
         log.info("approveComment - invoked");
         Comment comment = repository.findById(comId)
@@ -72,6 +74,7 @@ public class CommentAdminServiceImpl implements CommentAdminService {
     }
 
     @Override
+    @Transactional
     public CommentDto rejectComment(Long comId) {
         log.info("rejectComment - invoked");
         Comment comment = repository.findById(comId).orElseThrow(() -> new NotFoundException("Comment not found"));

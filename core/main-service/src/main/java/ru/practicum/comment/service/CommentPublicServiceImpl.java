@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 import static ru.practicum.util.Util.createPageRequestAsc;
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Slf4j
 public class CommentPublicServiceImpl implements CommentPublicService {

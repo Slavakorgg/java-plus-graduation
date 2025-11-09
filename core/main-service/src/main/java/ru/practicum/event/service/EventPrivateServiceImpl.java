@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class EventPrivateServiceImpl implements EventPrivateService {
 
     private final UserRepository userRepository;

@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-@Transactional
+
 public class CommentPrivateServiceImpl implements CommentPrivateService {
 
     private final CommentRepository repository;
@@ -30,6 +30,7 @@ public class CommentPrivateServiceImpl implements CommentPrivateService {
     private final EventRepository eventRepository;
 
     @Override
+    @Transactional
     public CommentDto createComment(Long userId, Long eventId, CommentCreateDto commentDto) {
         log.info("createComment - invoked");
         Comment comment = CommentMapper.toComment(commentDto);
@@ -56,6 +57,7 @@ public class CommentPrivateServiceImpl implements CommentPrivateService {
     }
 
     @Override
+    @Transactional
     public void deleteComment(Long userId, Long comId) {
         log.info("deleteComment - invoked");
         Comment comment = repository.findById(comId)
@@ -72,6 +74,7 @@ public class CommentPrivateServiceImpl implements CommentPrivateService {
     }
 
     @Override
+    @Transactional
     public CommentDto patchComment(Long userId, Long comId, CommentCreateDto commentCreateDto) {
         log.info("patchComment - invoked");
         Comment comment = repository.findById(comId)

@@ -17,7 +17,6 @@ import static ru.practicum.util.Util.createPageRequestAsc;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 @Slf4j
 public class CategoryPublicServiceImpl implements CategoryPublicService {
 

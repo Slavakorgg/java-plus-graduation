@@ -16,7 +16,6 @@ import ru.practicum.exception.NotFoundException;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Slf4j
 public class CompilationPublicServiceImpl implements CompilationPublicService {
