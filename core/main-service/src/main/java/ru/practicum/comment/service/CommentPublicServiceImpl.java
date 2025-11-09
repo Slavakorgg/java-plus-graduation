@@ -30,54 +30,73 @@ public class CommentPublicServiceImpl implements CommentPublicService {
 
     @Override
     public CommentDto getComment(Long comId) {
-        log.info("getComment - invoked");
+        log.info("getComment - invoked for comment ID: {}", comId);
+
         Comment comment = repository.findById(comId)
                 .orElseThrow(() -> {
-                    log.error("Comment with id = {} - not exist", comId);
+                    log.error("Comment with ID {} not found", comId);
                     return new NotFoundException("Comment not found");
                 });
+
         if (!comment.isApproved()) {
-            log.warn("Comment with id = {} is not approved", comId);
+            log.warn("Comment with ID {} is not approved (current state: {})",
+                    comId, comment.isApproved());
             throw new ForbiddenException("Comment is not approved");
         }
-        log.info("Result: comment with id= {}", comId);
+
+        log.info("Result: successfully retrieved approved comment with ID {}", comId);
         return CommentMapper.toCommentDto(comment);
     }
 
     @Override
     public List<CommentShortDto> getCommentsByEvent(Long eventId, int from, int size) {
-        log.info("getCommentsByEvent - invoked");
+        log.info("getCommentsByEvent - invoked for event ID: {}, from: {}, size: {}",
+                eventId, from, size);
+
         if (!eventRepository.existsById(eventId)) {
-            log.error("Event with id = {} - not exist", eventId);
+            log.error("Event with ID {} does not exist", eventId);
             throw new NotFoundException("Event not found");
         }
+
         Pageable pageable = createPageRequestAsc("createTime", from, size);
         Page<Comment> commentsPage = repository.findAllByEventId(eventId, pageable);
         List<Comment> comments = commentsPage.getContent();
+
         List<Comment> approvedComments = comments.stream()
                 .filter(Comment::isApproved)
                 .collect(Collectors.toList());
-        log.info("Result : list of approved comments size = {}", approvedComments.size());
+
+        log.info("Result: retrieved {} approved comments for event ID {} (requested {} items, offset {})",
+                approvedComments.size(), eventId, size, from);
+
         return CommentMapper.toListCommentShortDto(approvedComments);
     }
 
     @Override
     public CommentDto getCommentByEventAndCommentId(Long eventId, Long commentId) {
-        log.info("getCommentByEventAndCommentId - invoked");
+        log.info("getCommentByEventAndCommentId - invoked for event ID: {}, comment ID: {}",
+                eventId, commentId);
+
         Comment comment = repository.findById(commentId)
                 .orElseThrow(() -> {
-                    log.error("Comment with id = {} does not exist", commentId);
+                    log.error("Comment with ID {} not found", commentId);
                     return new NotFoundException("Comment not found");
                 });
+
         if (!comment.getEvent().getId().equals(eventId)) {
-            log.error("Comment with id = {} does not belong to event with id = {}", commentId, eventId);
+            log.error("Comment ID {} does not belong to event ID {} (belongs to event ID {})",
+                    commentId, eventId, comment.getEvent().getId());
             throw new NotFoundException("Comment not found for the specified event");
         }
+
         if (!comment.isApproved()) {
-            log.warn("Comment with id = {} is not approved", commentId);
+            log.warn("Comment ID {} is not approved (cannot be accessed)", commentId);
             throw new ForbiddenException("Comment is not approved");
         }
-        log.info("Result: comment with eventId= {} and commentId= {}", eventId, commentId);
+
+        log.info("Result: successfully retrieved comment ID {} for event ID {}",
+                commentId, eventId);
+
         return CommentMapper.toCommentDto(comment);
     }
 }

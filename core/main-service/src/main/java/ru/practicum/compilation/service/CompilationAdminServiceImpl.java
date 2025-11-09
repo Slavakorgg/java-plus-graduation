@@ -28,33 +28,53 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
 
     @Override
     public CompilationDto createCompilation(NewCompilationDto request) {
-        log.info("createCompilation - invoked");
-        Set<Event> events;
-        events = (request.getEvents() != null && !request.getEvents().isEmpty()) ?
-                new HashSet<>(eventRepository.findAllById(request.getEvents())) : new HashSet<>();
+        log.info("createCompilation - invoked. Title: '{}', pinned: {}, eventCount: {}",
+                request.getTitle(), request.getPinned(),
+                (request.getEvents() != null ? request.getEvents().size() : 0));
+
+        Set<Event> events = (request.getEvents() != null && !request.getEvents().isEmpty())
+                ? new HashSet<>(eventRepository.findAllById(request.getEvents()))
+                : new HashSet<>();
+
         Compilation compilation = Compilation.builder()
                 .pinned(request.getPinned() != null && request.getPinned())
                 .title(request.getTitle())
                 .events(events)
                 .build();
-        return CompilationMapper.toCompilationDto(compilationRepository.save(compilation));
+
+        Compilation savedCompilation = compilationRepository.save(compilation);
+        log.info("Result: compilation created with ID: {}, title: '{}'",
+                savedCompilation.getId(), savedCompilation.getTitle());
+        return CompilationMapper.toCompilationDto(savedCompilation);
     }
 
     @Override
     public void deleteCompilation(Long compId) {
-        log.info("deleteCompilation(- invoked");
+        log.info("deleteCompilation - invoked for compilation ID: {}", compId);
+
         if (!compilationRepository.existsById(compId)) {
-            throw new NotFoundException("Compilation Not Found");
+            log.error("Compilation with ID {} not found", compId);
+            throw new NotFoundException("Compilation not found");
         }
-        log.info("Result: compilation with id {} deleted ", compId);
+
         compilationRepository.deleteById(compId);
+        log.info("Result: compilation with ID {} deleted successfully", compId);
     }
 
     @Override
     public CompilationDto updateCompilation(Long compId, UpdateCompilationDto updateCompilationDto) {
-        log.info("updateCompilation - invoked");
+        log.info("updateCompilation - invoked for ID: {}. Changes - title: {}, pinned: {}, eventCount: {}",
+                compId,
+                updateCompilationDto.getTitle(),
+                updateCompilationDto.getPinned(),
+                (updateCompilationDto.getEvents() != null ? updateCompilationDto.getEvents().size() : "unchanged"));
+
         Compilation compilation = compilationRepository.findById(compId)
-                .orElseThrow(() -> new NotFoundException("Compilation with id " + compId + " not found"));
+                .orElseThrow(() -> {
+                    log.error("Compilation with ID {} not found", compId);
+                    return new NotFoundException("Compilation not found");
+                });
+
         if (updateCompilationDto.getTitle() != null) {
             compilation.setTitle(updateCompilationDto.getTitle());
         }
@@ -65,8 +85,14 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
             HashSet<Event> events = new HashSet<>(eventRepository.findAllById(updateCompilationDto.getEvents()));
             compilation.setEvents(events);
         }
+
         Compilation updatedCompilation = compilationRepository.save(compilation);
-        log.info("Result: compilation with id {} updated ", compId);
+        log.info("Result: compilation ID {} updated successfully. New title: '{}', pinned: {}, eventCount: {}",
+                updatedCompilation.getId(),
+                updatedCompilation.getTitle(),
+                updatedCompilation.getPinned(),
+                updatedCompilation.getEvents().size());
+
         return CompilationMapper.toCompilationDto(updatedCompilation);
     }
 }
