@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 
 public class EventMapper {
 
-
     public static Event toEvent(
             NewEventDto newEventDto,
             User initiator,
