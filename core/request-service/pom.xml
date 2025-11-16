@@ -10,7 +10,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>comment-service</artifactId>
+    <artifactId>request-service</artifactId>
 
     <dependencies>
 
@@ -19,7 +19,6 @@
         <dependency>
             <groupId>ru.practicum</groupId>
             <artifactId>core-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <!-- SYSTEM TOOL DEPS -->
