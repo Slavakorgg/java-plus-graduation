@@ -1,7 +1,7 @@
 info:
   app:
     name: discovery-server
-    description: My Area Guide
+    description: Explore With Me
     version: 1.0-SNAPSHOT
   company:
     name: Somekind Software
