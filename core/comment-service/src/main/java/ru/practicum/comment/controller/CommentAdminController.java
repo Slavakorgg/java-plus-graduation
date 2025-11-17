@@ -27,7 +27,7 @@ public class CommentAdminController implements CommentAdminApi {
     }
 
     @Override
-    public String delete(Long comId) {
+    public boolean delete(Long comId) {
         return commentAdminService.delete(comId);
     }
 
