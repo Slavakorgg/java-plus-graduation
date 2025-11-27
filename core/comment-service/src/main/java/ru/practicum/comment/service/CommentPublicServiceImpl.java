@@ -87,5 +87,4 @@ public class CommentPublicServiceImpl implements CommentPublicService {
 
         return CommentMapper.toCommentDto(comment, userDto, eventCommentDto);
     }
-
 }
