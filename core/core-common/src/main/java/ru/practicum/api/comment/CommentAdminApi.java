@@ -28,7 +28,7 @@ public interface CommentAdminApi {
 
     @DeleteMapping("/admin/comments/{comId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    String delete(
+    boolean delete(
             @PathVariable @Positive Long comId
     );
 
