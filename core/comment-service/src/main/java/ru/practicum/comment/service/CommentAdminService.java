@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CommentAdminService {
 
-    boolean delete(Long comId);
+    String delete(Long comId);
 
     List<CommentDto> search(String text, int from, int size);
 

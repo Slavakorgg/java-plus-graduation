@@ -12,7 +12,6 @@
 
     <artifactId>comment-service</artifactId>
 
-
     <dependencies>
 
         <!-- INTERNAL DEPS -->

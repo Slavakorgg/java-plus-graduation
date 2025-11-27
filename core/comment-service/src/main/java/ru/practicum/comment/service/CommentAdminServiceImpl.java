@@ -34,12 +34,10 @@ public class CommentAdminServiceImpl implements CommentAdminService {
 
     @Override
     @Transactional
-    public boolean delete(Long comId) {
-        if (!commentRepository.existsById(comId)) {
-            throw new NotFoundException("Not found Comment " + comId);
-        }
+    public String delete(Long comId) {
+        if (!commentRepository.existsById(comId)) throw new NotFoundException("Not found Comment " + comId);
         commentRepository.deleteById(comId);
-        return true;
+        return "deleted comment " + comId;
     }
 
     @Override
