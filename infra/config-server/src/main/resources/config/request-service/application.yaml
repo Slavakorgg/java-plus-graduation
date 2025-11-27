@@ -1,7 +1,7 @@
 info:
   app:
     name: request-service
-    description: Explore With Me
+    description: My Area Guide
     version: 1.0-SNAPSHOT
   company:
     name: Somekind Software

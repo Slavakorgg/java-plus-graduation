@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-@ConfigurationProperties("explore-with-me")
+@ConfigurationProperties("my-area-guide")
 @Component
 public class CustomProperties {
 

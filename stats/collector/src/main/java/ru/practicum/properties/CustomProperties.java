@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter
 @Setter
-@ConfigurationProperties("explore-with-me")
+@ConfigurationProperties("my-area-guide")
 public class CustomProperties {
 
     private final Kafka kafka = new Kafka();

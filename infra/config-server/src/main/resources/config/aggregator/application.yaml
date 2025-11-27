@@ -1,7 +1,7 @@
 info:
   app:
     name: aggregator
-    description: Explore With Me
+    description: My Area Guide
     version: 1.0-SNAPSHOT
   company:
     name: Somekind Software
@@ -57,5 +57,3 @@ spring:
       auto-startup: false
       type: single
       ack-mode: RECORD
-
-
