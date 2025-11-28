@@ -25,21 +25,21 @@ spring:
               uri: lb://user-service
               predicates:
                 - Path=
-                    /admin/users,
-                    /admin/users/*,
-                    /admin/users/*/short,
-                    /admin/users/all/*
+                  /admin/users,
+                  /admin/users/*,
+                  /admin/users/*/short,
+                  /admin/users/all/*
 
             - id: comment_service
               uri: lb://comment-service
               predicates:
                 - Path=
-                    /comments/**, 
-                    /events/*/comments/**, 
-                    /users/*/events/*/comments, 
-                    /users/*/comments/**, 
-                    /admin/comments/**, 
-                    /admin/users/*/comments
+                  /comments/**,
+                  /events/*/comments/**,
+                  /users/*/events/*/comments,
+                  /users/*/comments/**,
+                  /admin/comments/**,
+                  /admin/users/*/comments
 
             - id: request_service
               uri: lb://request-service
@@ -48,7 +48,8 @@ spring:
                   /requests/**,
                   /users/*/requests,
                   /users/*/requests/*/cancel,
-                  /users/*/events/*/requests
+                  /users/*/events/*/requests,
+                  /users/*/events/*/check/participation
 
             - id: event-service
               uri: lb://event-service
@@ -64,4 +65,5 @@ spring:
                   /categories/**,
                   /admin/categories/**,
                   /compilations/**,
-                  /admin/compilations/**
+                  /admin/compilations/**,
+                  /events/*/like

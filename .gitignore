@@ -15,8 +15,13 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+tester-0.0.1.jar
+/tester.bat
+tester.txt
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
+/execution-report.txt

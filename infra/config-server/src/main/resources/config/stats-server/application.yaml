@@ -1,7 +1,7 @@
 info:
   app:
-    name: stats-service
-    description: Explore With Me
+    name: stats-server
+    description: My Area Guide
     version: 1.0-SNAPSHOT
   company:
     name: Somekind Software
